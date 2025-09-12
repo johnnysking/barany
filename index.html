@@ -431,16 +431,17 @@ background: linear-gradient(135deg, #f5f5f5 0%, #e6e6e6 100%);
     }
 
     .drawer {
-        position: fixed;
-        top: 0;
-        left: -300px;
-        width: 300px;
-        height: 100vh;
-        background: rgba(10, 10, 10, 0.95);
-        z-index: 1001;
-        padding: 60px 20px;
-        transition: left 0.3s ease;
-    }
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.95); /* Fond blanc légèrement transparent */
+    z-index: 1001;
+    padding: 60px 20px;
+    transition: left 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Ajoute une ombre subtile */
+}
 
     .drawer.open {
         left: 0;
@@ -467,10 +468,19 @@ background: linear-gradient(135deg, #f5f5f5 0%, #e6e6e6 100%);
     }
 
     .drawer ul li a {
-        color: white;
-        text-decoration: none;
-        font-size: 1.2rem;
-    }
+    color: var(--text-dark); /* Utilise la couleur de texte sombre définie */
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease; /* Ajoute une transition douce */
+}
+
+.drawer ul li a:hover {
+    color: var(--secondary-color); /* Change la couleur au survol */
+}
+
+.drawer-close {
+    color: var(--text-dark); /* Change la couleur du bouton fermer */
+}
 
     @media (max-width: 768px) {
         .navbar {
