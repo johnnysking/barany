@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barany</title>
+      <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0a0a0a;
+            --secondary-color: #ff6b35;
+            --accent-color: #00d4aa;
+            --text-light: #e0e0e0;
+            --text-dark: #333;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-light);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow-x: hidden;
+        }
+
+        /* Navigation flottante */
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 15px 30px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .navbar a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .navbar a:hover {
+            color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .navbar a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .navbar a:hover::after {
+            width: 100%;
+        }
+
+        /* Section Hero */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.8), rgba(30, 30, 30, 0.6));
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="%23ff6b35" stop-opacity="0.1"/><stop offset="100%" stop-color="%2300d4aa" stop-opacity="0.05"/></radialGradient></defs><circle cx="200" cy="200" r="300" fill="url(%23a)"/><circle cx="800" cy="600" r="200" fill="url(%23a)"/></svg>') no-repeat center/cover;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+            font-family: 'Graduate', cursive;
+
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.5)); }
+            to { filter: drop-shadow(0 0 20px rgba(0, 212, 170, 0.5)); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Section À propos */
+        .about {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .about-text strong {
+            color: var(--accent-color);
+        }
+
+        .about-image {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        /* Galerie d'œuvres */
+        .gallery {
+            background: rgba(10, 10, 10, 0.5);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .artwork-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .artwork-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .artwork-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .artwork-info {
+            padding: 1.5rem;
+        }
+
+        .artwork-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .artwork-series {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+        }
+
+        /* Projets NFT */
+        .nft-projects {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .nft-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .nft-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .nft-card:hover {
+            transform: scale(1.02);
+        }
+
+        .nft-platform {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-color);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: var(--glass-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            border: 1px solid var(--glass-border);
+        }
+
+        .social-link:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        /* Modal pour les œuvres */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 80%;
+            max-height: 80%;
+            border: 1px solid var(--glass-border);
+        }
+
+        .modal-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 2rem;
+            color: var(--text-light);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .navbar {
+                padding: 20px;
+                border-radius: 20px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .gallery-grid,
+            .nft-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations d'apparition */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="#hero">Accueil</a></li>
+            <li><a href="#about">À propos</a></li>
+            <li><a href="#gallery">Programmes</a></li>
+            <li><a href="#nft">Projets NFT</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1>Barany</h1>
+            <p>Se dépasser, vaincre ses peurs, persévérer et apprendre dans un environnement sécuritaire, c'est l'essence même de notre organisme.</p>
+            <a href="#gallery" class="cta-button">Découvrir le club</a>
+        </div>
+    </section>
+
+    <!-- Section À propos -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title fade-in">À Propos</h2>
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <p>Le Club de gymnastique Barany de Lachute est un lieu dynamique et accueillant où les jeunes peuvent s’épanouir tout en développant leur motricité, leur confiance et leur esprit d’équipe.
+
+Nous offrons une variété d’activités adaptées à tous les niveaux : gymnastique récréative, parcours acrobatique et camps d’été remplis de défis et de plaisir.
+
+Notre équipe d’entraîneurs passionnés accompagne chaque enfant dans un environnement sécuritaire, stimulant et amusant, favorisant l’apprentissage et le dépassement de soi.
+
+Rejoignez-nous pour découvrir le plaisir de bouger !</p>
+                    
+                    
+                </div>
+                <div class="about-image fade-in">
+                    <div style="text-align: center; padding: 2rem;">
+                        <h3 style="color: var(--accent-color); margin-bottom: 1rem;">Bouger. S’amuser. Grandir.</h3>
+                        <p>chaque saut, chaque parcours et chaque défi est une opportunité de se dépasser et de s’épanouir.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galerie d'œuvres -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2 class="section-title fade-in">Programmes</h2>
+            <div class="gallery-grid">
+                <!-- Œuvres de la série Mechanical Birds -->
+                <div class="artwork-card fade-in" onclick="openModal('Bird 01', 'Série Mechanical Birds')">
+                    <div class="artwork-image">Ados 13 + et Adultes </div>
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Ados 13 + et Adultes</h3>
+                        <p class="artwork-series">Ce cours est offert pour tous les niveaux allant des débutants à avancés. 
+
+Que vous soyez une ancienne gymnaste, un parent ou tout simplement intéressé par ce sport, ce cours de 60 minutes est parfait pour explorer et approfondir ses compétences gymniques et se remettre en forme.</p>
+                    </div>
+                </div>
+
+                <div class="artwork-card fade-in" onclick="openModal('Bird 02', 'Série Mechanical Birds')">
+                    <div class="artwork-image">Avancé </div>
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Avancé </h3>
+                        <p class="artwork-series">Pour vous inscrire dans cette catégorie, vous devez avoir fait au moins une session chez Barany. Ce cours de 3h permet aux enfants qui désirent en apprendre davantage de développer des habiletés plus avancées. Parallèlement votre enfant suivra le programme régional 2 ou 3, selon son niveau. 
+
+Belle porte d'entrée pour joindre le secteur compétitif par la suite</p>
+                    </div>
+                </div>
+
+                <div class="artwork-card fade-in" onclick="openModal('Bird 03', 'Série Mechanical Birds')">
+                    <div class="artwork-image">Bambi-Barany</div>
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Bambi-Barany</h3>
+                        <p class="artwork-series">Idéal pour les enfants entre 1 et 3 ans.   
+Le cours Bambi-Barany est un cours parent-enfant. Il permet de créer un premier contact dans le monde de la gymnastique en présence du parent. Le travail par éducatif se fait sous forme de parcours amusants favorisant le développement moteur des enfants. Le ratio est d’un parent par enfant.
+
+L’enfant doit avoir l’âge requis au premier cours de la session courante.
+Un seul parent par enfant inscrit.</p>
+                    </div>
+                </div>
+
+                <div class="artwork-card fade-in" onclick="openModal('Eagle Cycle', 'Série Mechanical Birds')">
+                    <div class="artwork-image">Compétitif</div>
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Compétitif</h3>
+                        <p class="artwork-series"> LE PROGRAMME PROVINCIAL
+Le programme provincial est géré par la Fédération de gymnastique du Québec et se veut pour les athlètes plus avancés qu’au régional et plus complète au niveau des 4 engins soient la poutre, le sol, le saut et les barres asymétriques.
+Il y a 2 compétitions de sélection, par la suite, il y a une finalité provinciale selon le niveau soit la Coupe Provinciale ou les Championnats Québécois.
+Les gymnastes de ce réseau s’entraînent de 10 à 16 heures par semaine.
+Pour le moment, le club Barany offre le niveau provincial N4 à 7.
+** SUR SÉLECTION SEULEMENT** </p>
+                    </div>
+                </div>
+
+                <div class="artwork-card fade-in" onclick="openModal('Captain Time', 'Série Mechanical Birds')">
+                    <div class="artwork-image">Gymnastique Masculine</div>
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Gymnastique Masculine</h3>
+                        <p class="artwork-series"> GYMNASTIQUE GARÇONS
+La gymnastique artistique masculine consiste en plusieurs épreuves : les exercices au sol, le cheval d’arçons, les anneaux, le saut, les barres parallèles et la barre fixe. Elle nécessite beaucoup de force plus particulièrement du haut du corps. Lors de ce cours, nous explorons également la trampoline.
+
+Les garçons de 5 ans ont également le choix de s'inscrire dans le groupe grenouille. </p>
+                    </div>
+                </div>
+
+                <div class="artwork-card fade-in" onclick="openModal('Espoir haut-de-forme', 'Série Mechanical Birds')">
+                    <div class="artwork-image">Espoir haut-de-forme</div>
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Espoir haut-de-forme</h3>
+                        <p class="artwork-series">Ce cours est l’initiation plus spécifique à l’univers fantastique de la gymnastique et se fait en petit groupe en compagnie d’une monitrice. Sous forme de parcours, votre enfant touchera aux différents agrès tel que la poutre, les barres asymétriques, la table de saut, le sol et le trampoline. C’est également dans ce cours que les bases fondamentales de la gymnastique seront instaurées et ce dans la sécurité et le plaisir : apprendre à tomber, les mouvements de bases, les réceptions et bien plus ! 
+
+*Possibilité pour les enfants de 3 ans ayant déjà participé à au moins une session du Bambi-Barany d’être dans ce groupe.  Dans ce cas, nous écrire et nous vous guiderons, le plateforme web ne vous permettra pas cette inscription. info@clubbarany.com</p>
+                    </div>
+                </div>
+
+                <!-- <div class="artwork-card fade-in" onclick="openModal('La demie d&apos;hier', 'Série Mechanical Birds')">
+                    <div class="artwork-image">La demie d'hier</div>
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">La demie d'hier</h3>
+                        <p class="artwork-series">Série Mechanical Birds</p>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </section>
+
+    <!-- Projets NFT -->
+    <section id="nft" class="nft-projects">
+        <div class="container">
+            <h2 class="section-title fade-in"></h2>
+            <div class="nft-grid">
+                <div class="nft-card fade-in">
+                    <span class="nft-platform">Carte Privilège</span>
+                    <!-- <h3>M.M.M.</h3> -->
+                    <!-- <p>Collection "Skull in glass & Burden series" - Exploration des thèmes de mortalité et de fardeau à travers l'art génératif.</p> -->
+                </div>
+
+                <div class="nft-card fade-in">
+                    <span class="nft-platform">Carte Cadeau</span>
+                    <!-- <h3>Ganimation</h3>
+                    <p>Diverses séries d'œuvres d'art IA animées incluant "Lines of lifes", "Drowned Cages" et bien d'autres créations dynamiques.</p> -->
+                </div>
+
+                <div class="nft-card fade-in">
+                    <span class="nft-platform">Carte de membre</span>
+                    <!-- <h3>Architecture Spéculative</h3>
+                    <p>Série d'architecture spéculative adversariale générée par IA, créée avec VQGAN-CLIP et inspirée par les mathématiques architecturales.</p> -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="social-links">
+                <a href="#" class="social-link">📧</a>
+                <a href="#" class="social-link">🐦</a>
+                <a href="#" class="social-link">📘</a>
+                <a href="#" class="social-link">🔗</a>
+            </div>
+            <p>&copy; 2025 Jean-Sébastien Roy. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Modal pour afficher les œuvres -->
+    <div id="artworkModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <div class="modal-image" id="modalImage"></div>
+            <h3 id="modalTitle"></h3>
+            <p id="modalSeries"></p>
+        </div>
+    </div>
+
+    <script>
+        // Animation au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observer tous les éléments avec la classe fade-in
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navigation fluide
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fonctions modal
+        function openModal(title, series) {
+            const modal = document.getElementById('artworkModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalSeries = document.getElementById('modalSeries');
+            const modalImage = document.getElementById('modalImage');
+            
+            modalTitle.textContent = title;
+            modalSeries.textContent = series;
+            modalImage.textContent = title; // Placeholder pour l'image
+            modalImage.style.background = 'linear-gradient(45deg, var(--secondary-color), var(--accent-color))';
+            modalImage.style.height = '400px';
+            modalImage.style.display = 'flex';
+            modalImage.style.alignItems = 'center';
+            modalImage.style.justifyContent = 'center';
+            modalImage.style.fontSize = '2rem';
+            modalImage.style.fontWeight = '600';
+            modalImage.style.color = 'white';
+            
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('artworkModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Fermer la modal en cliquant à l'extérieur
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('artworkModal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Effet de parallaxe léger sur le hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Animation de la navbar au scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(0, 0, 0, 0.8)';
+                navbar.style.backdropFilter = 'blur(30px)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.1)';
+                navbar.style.backdropFilter = 'blur(20px)';
+            }
+        });
+    </script>
+</body>
+</html>
