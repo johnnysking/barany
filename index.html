@@ -13,21 +13,21 @@
         }
 
         :root {
-            --primary-color: #0a0a0a;
-            --secondary-color: #ff6b35;
-            --accent-color: #00d4aa;
-            --text-light: #e0e0e0;
-            --text-dark: #333;
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-        }
+    --primary-color: #ffffff;
+    --secondary-color: #8B0000;    /* Rouge plus foncé et moins vif */
+    --accent-color: #4a4a4a;       /* Gris foncé pour les accents */
+    --text-light: #333333;         /* Texte foncé sur fond clair */
+    --text-dark: #8B0000;          /* Rouge foncé pour certains textes */
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(139, 0, 0, 0.2);
+}
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.6;
             color: var(--text-light);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            overflow-x: hidden;
+background: linear-gradient(135deg, #f5f5f5 0%, #e6e6e6 100%);
+    color: var(--text-light);            overflow-x: hidden;
         }
 
         /* Navigation flottante */
@@ -44,6 +44,15 @@
             z-index: 1000;
             transition: all 0.3s ease;
         }
+
+        .navbar.scrolled {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(30px);
+}
+
+.navbar.scrolled a {
+    color: #ffffff !important;
+}
 
         .navbar ul {
             display: flex;
@@ -88,7 +97,7 @@
             justify-content: center;
             text-align: center;
             position: relative;
-            background: linear-gradient(135deg, rgba(10, 10, 10, 0.8), rgba(30, 30, 30, 0.6));
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.05), rgba(255, 255, 255, 0.1));
         }
 
         .hero::before {
@@ -116,18 +125,18 @@
             font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 700;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: linear-gradient(135deg, #8B0000, #570000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
             animation: glow 2s ease-in-out infinite alternate;
             font-family: 'Graduate', cursive;
 
         }
 
         @keyframes glow {
-            from { filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.5)); }
-            to { filter: drop-shadow(0 0 20px rgba(0, 212, 170, 0.5)); }
-        }
+    from { filter: drop-shadow(0 0 10px rgba(139, 0, 0, 0.3)); }
+    to { filter: drop-shadow(0 0 20px rgba(139, 0, 0, 0.5)); }
+}
 
         .hero p {
             font-size: 1.5rem;
@@ -138,13 +147,13 @@
         .cta-button {
             display: inline-block;
             padding: 15px 40px;
-            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+    background: linear-gradient(135deg, #8B0000, #570000);
             color: white;
             text-decoration: none;
             border-radius: 50px;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+    box-shadow: 0 10px 30px rgba(139, 0, 0, 0.2);
         }
 
         .cta-button:hover {
@@ -408,18 +417,90 @@
             opacity: 1;
             transform: translateY(0);
         }
+        .drawer-toggle {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        color: var(--accent-color);
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+        cursor: pointer;
+    }
+
+    .drawer {
+        position: fixed;
+        top: 0;
+        left: -300px;
+        width: 300px;
+        height: 100vh;
+        background: rgba(10, 10, 10, 0.95);
+        z-index: 1001;
+        padding: 60px 20px;
+        transition: left 0.3s ease;
+    }
+
+    .drawer.open {
+        left: 0;
+    }
+
+    .drawer-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: var(--accent-color);
+        font-size: 2rem;
+        cursor: pointer;
+    }
+
+    .drawer ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .drawer ul li {
+        margin: 20px 0;
+    }
+
+    .drawer ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.2rem;
+    }
+
+    @media (max-width: 768px) {
+        .navbar {
+            display: none;
+        }
+        .drawer-toggle {
+            display: block;
+        }
+    }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
+<button class="drawer-toggle" aria-label="Ouvrir le menu">&#9776;</button>
     <nav class="navbar">
         <ul>
             <li><a href="#hero">Accueil</a></li>
             <li><a href="#about">À propos</a></li>
             <li><a href="#gallery">Programmes</a></li>
-            <li><a href="#nft">Projets NFT</a></li>
+            <li><a href="#nft">Contact</a></li>
         </ul>
     </nav>
+    <div class="drawer">
+        <button class="drawer-close" aria-label="Fermer le menu">&times;</button>
+        <ul>
+            <li><a href="#hero">Accueil</a></li>
+            <li><a href="#about">À propos</a></li>
+            <li><a href="#gallery">Programmes</a></li>
+            <li><a href="#contact">Projets NFT</a></li>
+        </ul>
+    </div>
 
     <!-- Hero Section -->
     <section id="hero" class="hero">
@@ -449,7 +530,7 @@ Rejoignez-nous pour découvrir le plaisir de bouger !</p>
                 <div class="about-image fade-in">
                     <div style="text-align: center; padding: 2rem;">
                         <h3 style="color: var(--accent-color); margin-bottom: 1rem;">Bouger. S’amuser. Grandir.</h3>
-                        <p>chaque saut, chaque parcours et chaque défi est une opportunité de se dépasser et de s’épanouir.</p>
+                        <p>Chaque saut, chaque parcours et chaque défi est une opportunité de se dépasser et de s’épanouir.</p>
                     </div>
                 </div>
             </div>
@@ -565,6 +646,46 @@ Les garçons de 5 ans ont également le choix de s'inscrire dans le groupe greno
         </div>
     </section>
 
+    <section id="contact" class="contact">
+    <div class="container">
+        <h2 class="section-title fade-in">Nous Contacter</h2>
+        <div class="contact-grid">
+            <div class="contact-info fade-in">
+                <div class="contact-card">
+                    <h3>Adresse</h3>
+                    <p>72 rue Durocher</p>
+                    <p>Lachute, QC J8H 1W9</p>
+                </div>
+                <div class="contact-card">
+                    <h3>Téléphone</h3>
+                    <p>(450) 566-0957</p>
+                </div>
+                <div class="contact-card">
+                    <h3>Courriel</h3>
+                    <p>info@clubbarany.com</p>
+                </div>
+                <div class="contact-card">
+                    <h3>Heures d'ouverture</h3>
+                    <p>Lundi - Vendredi: 9h - 21h</p>
+                    <p>Samedi: 9h - 17h</p>
+                    <p>Dimanche: Fermé</p>
+                </div>
+            </div>
+            <div class="map-container fade-in">
+                <!-- Remplacer le src par votre lien Google Maps -->
+                <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2785.051587043876!2d-74.34843372375895!3d45.64251627107901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc9aa8ecd6844bd%3A0x647a6c5975e4958c!2s72%20Rue%20Durocher%2C%20Lachute%2C%20QC%20J8H%201W9!5e0!3m2!1sfr!2sca!4v1694565433787!5m2!1sfr!2sca" 
+                    width="100%" 
+                    height="450" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -589,6 +710,28 @@ Les garçons de 5 ans ont également le choix de s'inscrire dans le groupe greno
     </div>
 
     <script>
+        
+        const drawerToggle = document.querySelector('.drawer-toggle');
+    const drawerClose = document.querySelector('.drawer-close');
+    const drawer = document.querySelector('.drawer');
+    const drawerLinks = document.querySelectorAll('.drawer a');
+
+    drawerToggle.addEventListener('click', () => {
+        drawer.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    });
+
+    drawerClose.addEventListener('click', () => {
+        drawer.classList.remove('open');
+        document.body.style.overflow = 'auto';
+    });
+
+    drawerLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            drawer.classList.remove('open');
+            document.body.style.overflow = 'auto';
+        });
+    });
         // Animation au scroll
         const observerOptions = {
             threshold: 0.1,
@@ -609,18 +752,41 @@ Les garçons de 5 ans ont également le choix de s'inscrire dans le groupe greno
         });
 
         // Navigation fluide
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+        // Remplacer tout le code de navigation existant par celui-ci :
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        
+        // Fermer le drawer si on est sur mobile
+        if (drawer.classList.contains('open')) {
+            drawer.classList.remove('open');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Scroll vers le haut pour #hero
+        if (href === '#hero') {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
-        });
+            return;
+        }
+
+        // Pour les autres sections
+        const target = document.querySelector(href);
+        if (target) {
+            const headerOffset = 80;
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
 
         // Fonctions modal
         function openModal(title, series) {
@@ -670,15 +836,13 @@ Les garçons de 5 ans ont également le choix de s'inscrire dans le groupe greno
 
         // Animation de la navbar au scroll
         window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 100) {
-                navbar.style.background = 'rgba(0, 0, 0, 0.8)';
-                navbar.style.backdropFilter = 'blur(30px)';
-            } else {
-                navbar.style.background = 'rgba(255, 255, 255, 0.1)';
-                navbar.style.backdropFilter = 'blur(20px)';
-            }
-        });
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 100) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
     </script>
 </body>
 </html>
